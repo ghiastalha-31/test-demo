@@ -1,0 +1,86 @@
+/* open-sans-latin-wght-normal */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300 800;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/open-sans:vf@latest/latin-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+body {
+  margin: 0;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+body * {
+  box-sizing: border-box;
+}
+
+.items-container {
+  padding: 1rem;
+  font-family: sans-serif;
+}
+
+.items-controls {
+  margin-bottom: 1rem;
+}
+
+.items-controls input {
+  padding: 0.4rem;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.items-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+.items-list li {
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.items-list li a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.items-list li a:hover {
+  text-decoration: underline;
+}
+
+.loading .skeleton {
+  height: 20px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 37%, #f0f0f0 63%);
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.2s ease-in-out infinite;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagination button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ccc;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
