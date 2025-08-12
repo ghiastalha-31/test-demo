@@ -3,6 +3,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const router = express.Router();
 const DATA_PATH = path.join(__dirname, '../../../data/items.json');
+const { itemSchema } = require('../middleware/itemsValidation')
 
 // Utility to read data (intentionally sync to highlight blocking issue)
 const readData = async () => {
@@ -39,12 +40,11 @@ router.get('/', async (req, res, next) => {
 // GET /api/items/:id
 router.get('/:id', async (req, res, next) => {
   try {
+    // we can add a check to make sure that query params is a number or not
     const data = await readData();
     const item = data.find(i => i.id === parseInt(req.params.id));
     if (!item) {
-      const err = new Error('Item not found');
-      err.status = 404;
-      throw err;
+      return res.status(404).json({ error: 'Item not found' });
     }
     res.json(item);
   } catch (err) {
@@ -55,13 +55,17 @@ router.get('/:id', async (req, res, next) => {
 // POST /api/items
 router.post('/', async (req, res, next) => {
   try {
-    // TODO: Validate payload (intentional omission)
-    const item = req.body;
+    const { error, value } = itemSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
     const data = await readData();
-    item.id = Date.now();
-    data.push(item);
+    const newItem = { ...value, id: Date.now() };
+
+    data.push(newItem);
     await writeData(data)
-    res.status(201).json(item);
+    res.status(201).json(newItem);
   } catch (err) {
     next(err);
   }
